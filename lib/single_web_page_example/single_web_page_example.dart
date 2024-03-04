@@ -6,9 +6,6 @@ import 'package:single_web_page/single_web_page_example/widget/site_button.dart'
 import '../single_web_page/adaptive_single_web_page.dart';
 import '../single_web_page/single_web_page_controller.dart';
 
-
-
-
 class SingleWebPageExample extends StatefulWidget {
   const SingleWebPageExample({super.key});
 

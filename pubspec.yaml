@@ -3,7 +3,7 @@ description: "Single Web Page implementation for Flutter Web"
 
 publish_to:
 
-version: 1.0.0+1
+version: 1.0.1
 homepage: https://github.com/commandiron/single_web_page
 
 environment:
@@ -12,7 +12,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.2
   sliver_tools: ^0.2.12
 
 dev_dependencies:

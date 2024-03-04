@@ -3,7 +3,7 @@ import 'package:single_web_page/single_web_page_example/sections.dart';
 import 'package:single_web_page/single_web_page_example/widget/menu_button.dart';
 import 'package:single_web_page/single_web_page_example/widget/site_button.dart';
 
-import '../adaptive_single_web_page/adaptive_single_web_page.dart';
+import '../single_web_page/adaptive_single_web_page.dart';
 import '../single_web_page/single_web_page_controller.dart';
 
 

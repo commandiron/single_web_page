@@ -3,7 +3,7 @@ description: "Single Web Page implementation for Flutter Web"
 
 publish_to:
 
-version: 1.0.4
+version: 1.0.5
 homepage: https://github.com/commandiron/single_web_page
 
 environment:

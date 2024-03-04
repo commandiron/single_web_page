@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:single_web_page/single_web_page_example/single_web_page_example.dart';
+import 'single_web_page_example.dart';
 
 class SWPMaterialApp extends StatelessWidget {
   const SWPMaterialApp({super.key});

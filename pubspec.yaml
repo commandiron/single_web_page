@@ -1,9 +1,10 @@
 name: single_web_page
 description: "Single Web Page implementation for Flutter Web"
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to:
 
 version: 1.0.0+1
+homepage: https://github.com/commandiron/single_web_page
 
 environment:
   sdk: '>=3.2.2 <4.0.0'

@@ -1,16 +1,15 @@
 # single_web_page
 
-Single Web Page implementation for Flutter Web
+Create Single Web Page Layout with adaptive scrollable implementations.
 
-## Getting Started
+## How it Looks
+What does the code in the example look like;
 
-This project is a starting point for a Flutter application.
+## Usage
+Basic usage of single web page;
 
-A few resources to get you started if this is your first Flutter project:
+## Additional Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+#### Adaptive Scroll
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#### Sliver App Bar

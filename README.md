@@ -88,11 +88,5 @@ class _HowToUseSingleWebPageState extends State<HowToUseSingleWebPage> {
 }
 ```
 
-## Additional Features
-
-#### Adaptive Scroll
-
-#### Sliver App Bar
-
 ## Note
 Please keep this in mind when using this library. While creating this library, I never tried it on platforms other than the web.

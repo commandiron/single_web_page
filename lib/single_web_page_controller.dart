@@ -12,8 +12,6 @@ class SingleWebPageController extends ScrollController {
     this.topSnapExtraOffset = 0,
     this.centerSnapExtraOffset = 0,
     this.bottomSnapExtraOffset = 0,
-    Curve curve = Curves.ease,
-    Duration duration = const Duration(milliseconds: 1000),
   });
 
   final List<Snap> snaps;

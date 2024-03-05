@@ -1,13 +1,7 @@
-# single_web_page
+import 'package:flutter/material.dart';
+import 'package:single_web_page/single_web_page.dart';
+import 'package:single_web_page/single_web_page_controller.dart';
 
-Create Single Web Page Layout with adaptive scrollable implementations.
-
-## How it Looks
-What does the code in the example look like;
-
-## How to use
-
-```
 class HowToUseSingleWebPage extends StatefulWidget {
   const HowToUseSingleWebPage({super.key});
 
@@ -84,13 +78,3 @@ class _HowToUseSingleWebPageState extends State<HowToUseSingleWebPage> {
     );
   }
 }
-```
-
-## Additional Features
-
-#### Adaptive Scroll
-
-#### Sliver App Bar
-
-## Note
-Please keep this in mind when using this library. While creating this library, I never tried it on platforms other than the web.

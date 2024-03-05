@@ -25,11 +25,11 @@ class _HowToUseSingleWebPageState extends State<HowToUseSingleWebPage> {
     _controller = SingleWebPageController(
       //Specify snap for each index (default topSnap)
       snaps: [Snap.topSnap, Snap.centerSnap, Snap.bottomSnap],
-      //Specify extra offset for topSnaps.
+      //Specify extra offset for topSnaps
       topSnapExtraOffset: 0,
-      //Specify extra offset for centerSnaps.
+      //Specify extra offset for centerSnaps
       centerSnapExtraOffset: 0,
-      //Specify extra offset for bottomSnaps.
+      //Specify extra offset for bottomSnaps
       bottomSnapExtraOffset: 0,
     );
     super.initState();
@@ -40,7 +40,7 @@ class _HowToUseSingleWebPageState extends State<HowToUseSingleWebPage> {
     //If you want adaptive scroll, use AdaptiveSingleWebPage
     return SingleWebPage(
       controller: _controller, //Provide controller
-      sliverAppBar: null, //Specify sliverAppBar if you want.
+      sliverAppBar: null, //Specify sliverAppBar if you want
       sections: [
         //Specify sections
         Container(

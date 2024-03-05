@@ -1,9 +1,9 @@
 name: single_web_page
-description: "Create Scrollable Single Web Page Layout"
+description: "Create Single Web Page Layout with adaptive scrollable implementations."
 homepage: https://github.com/commandiron/single_web_page
 repository: https://github.com/commandiron/single_web_page
 
-version: 1.0.5
+version: 1.0.7
 
 environment:
   sdk: '>=3.2.2 <4.0.0'

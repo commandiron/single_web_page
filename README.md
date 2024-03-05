@@ -3,7 +3,7 @@
 Create Single Web Page Layout with adaptive scrollable implementations.
 
 ## How it Looks
-What does the code in the example look like;
+What does the code in the [example](https://pub.dev/packages/single_web_page/example) look like;
 
 ![](art/swp.gif)
 

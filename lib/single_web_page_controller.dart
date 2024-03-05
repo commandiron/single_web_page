@@ -65,9 +65,12 @@ class SingleWebPageController extends ScrollController {
   void calculateCenterSnapOffsets() {
     topSnapOffsets.forEach((index, topSnapOffset) {
       final viewportHeight = position.viewportDimension;
-      final viewportHeightMinusSectionHeight = viewportHeight - sectionHeights[index]!;
-      final viewportHeightMinusSectionHeightDivideTwo = viewportHeightMinusSectionHeight / 2;
-      double offset = topSnapOffsets[index]! - viewportHeightMinusSectionHeightDivideTwo;
+      final viewportHeightMinusSectionHeight =
+          viewportHeight - sectionHeights[index]!;
+      final viewportHeightMinusSectionHeightDivideTwo =
+          viewportHeightMinusSectionHeight / 2;
+      double offset =
+          topSnapOffsets[index]! - viewportHeightMinusSectionHeightDivideTwo;
 
       if (index != 0) {
         offset += centerSnapExtraOffset;
@@ -94,7 +97,8 @@ class SingleWebPageController extends ScrollController {
         offset += sectionHeights[i] ?? 0;
       }
       final viewportHeight = position.viewportDimension;
-      final viewportHeightMinusSectionHeight = viewportHeight - sectionHeights[index]!;
+      final viewportHeightMinusSectionHeight =
+          viewportHeight - sectionHeights[index]!;
       offset = offset - viewportHeightMinusSectionHeight;
 
       if (index != 0) {

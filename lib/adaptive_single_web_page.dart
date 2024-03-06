@@ -23,7 +23,7 @@ class AdaptiveSingleWebPage extends StatelessWidget {
     return _ScrollDetector(
       onPointerScroll: physics == null
           ? (pointerScrollEvent) {
-              if (!_Adaptive.isDesktop() || _Adaptive.isMac()) {
+              if (!_Adaptive.isWindows()) {
                 return;
               }
               if (pointerScrollEvent.scrollDelta.dy > 0) {
@@ -37,12 +37,9 @@ class AdaptiveSingleWebPage extends StatelessWidget {
       child: SingleWebPage(
         controller: controller,
         physics: physics ??
-            _Adaptive.getValue(
-              const AlwaysScrollableScrollPhysics(),
-              _Adaptive.isMac()
-                  ? const AlwaysScrollableScrollPhysics()
-                  : const NeverScrollableScrollPhysics(),
-            ),
+            (_Adaptive.isWindows()
+                ? const NeverScrollableScrollPhysics()
+                : const AlwaysScrollableScrollPhysics()),
         sliverAppBar: sliverAppBar,
         sections: sections,
       ),
@@ -83,22 +80,7 @@ class _Adaptive extends StatelessWidget {
     required this.desktop,
   });
 
-  static bool isDesktop() =>
-      defaultTargetPlatform == TargetPlatform.windows ||
-      defaultTargetPlatform == TargetPlatform.macOS;
-
-  static bool isMac() => defaultTargetPlatform == TargetPlatform.macOS;
-
-  static dynamic getValue(
-    mobileValue,
-    desktopValue,
-  ) {
-    if (defaultTargetPlatform == TargetPlatform.iOS ||
-        defaultTargetPlatform == TargetPlatform.android) {
-      return mobileValue;
-    }
-    return desktopValue;
-  }
+  static bool isWindows() => defaultTargetPlatform == TargetPlatform.windows;
 
   @override
   Widget build(BuildContext context) {

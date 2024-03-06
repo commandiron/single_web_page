@@ -26,14 +26,40 @@ class SingleWebPageController extends ScrollController {
   double lastCurrentPixels = 0;
 
   void updateSectionHeights(int index, double height) {
+
     sectionHeights.update(
       index,
       (value) => height,
       ifAbsent: () => height,
     );
+
     calculateTopSnapOffsets();
     calculateCenterSnapOffsets();
     calculateBottomSnapOffsets();
+
+    fixOffset();
+  }
+
+  void fixOffset() {
+    late final Map<int, double> snapOffsets;
+    final snap = snaps.elementAtOrNull(sectionIndex);
+    switch (snap) {
+      case null:
+        snapOffsets = topSnapOffsets;
+      case Snap.topSnap:
+        snapOffsets = topSnapOffsets;
+      case Snap.centerSnap:
+        snapOffsets = centerSnapOffsets;
+      case Snap.bottomSnap:
+        snapOffsets = bottomSnapOffsets;
+    }
+    if (!snapOffsets.containsKey(sectionIndex)) {
+      return;
+    }
+    final correctionOffset = snapOffsets[sectionIndex]!;
+    if(position.pixels != correctionOffset) {
+      animateTo(correctionOffset, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+    }
   }
 
   void calculateTopSnapOffsets() {

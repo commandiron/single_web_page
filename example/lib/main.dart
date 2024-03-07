@@ -27,9 +27,9 @@ class SWPMaterialApp extends StatelessWidget {
           primary: Color(0xff008CFF),
           onPrimary: Color(0xffffffff),
           primaryContainer: Color(0xff010203),
-          onPrimaryContainer: Color(0xffBABABA),
+          onPrimaryContainer: Color(0xffffffff),
           secondaryContainer: Color(0xff0D0D0D),
-          onSecondaryContainer: Colors.white,
+          onSecondaryContainer: Color(0xffffffff),
         ),
       ),
       home: const SingleWebPageExample(),
@@ -119,22 +119,22 @@ class _SingleWebPageExampleState extends State<SingleWebPageExample> {
                     if (constraints.maxHeight < 40) {
                       return const SizedBox.shrink();
                     }
-                    return FittedBox(
+                    return const FittedBox(
                       child: Row(
                         children: [
                           Text(
                             "FLUTTER WEB",
                             style: TextStyle(
                               fontSize: 40,
-                              color: Theme.of(context).colorScheme.onPrimaryContainer,
+                              color: Color(0xffBABABA),
                             ),
                           ),
-                          const SizedBox(
+                          SizedBox(
                             width: 16,
                           ),
                           Icon(
                             Icons.flutter_dash,
-                            color: Theme.of(context).colorScheme.onPrimaryContainer,
+                            color: Color(0xffBABABA),
                             size: 40,
                           )
                         ],

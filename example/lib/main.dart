@@ -24,10 +24,10 @@ class SWPMaterialApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: const ColorScheme.light(
-          primary: Color(0xff010203),
-          onPrimary: Color(0xffBABABA),
-          secondary: Color(0xff008CFF),
-          onSecondary: Colors.white,
+          primary: Color(0xff008CFF),
+          onPrimary: Color(0xffffffff),
+          primaryContainer: Color(0xff010203),
+          onPrimaryContainer: Color(0xffBABABA),
           secondaryContainer: Color(0xff0D0D0D),
           onSecondaryContainer: Colors.white,
         ),
@@ -74,9 +74,9 @@ class _SingleWebPageExampleState extends State<SingleWebPageExample> {
 
   SliverAppBar _buildSliverAppBar() {
     return SliverAppBar(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       shadowColor: Colors.transparent,
-      foregroundColor: Theme.of(context).colorScheme.onPrimary,
+      foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
       surfaceTintColor: Colors.transparent,
       expandedHeight: expandedHeight,
       collapsedHeight: collapsedHeight,
@@ -126,7 +126,7 @@ class _SingleWebPageExampleState extends State<SingleWebPageExample> {
                             "FLUTTER WEB",
                             style: TextStyle(
                               fontSize: 40,
-                              color: Theme.of(context).colorScheme.onPrimary,
+                              color: Theme.of(context).colorScheme.onPrimaryContainer,
                             ),
                           ),
                           const SizedBox(
@@ -134,7 +134,7 @@ class _SingleWebPageExampleState extends State<SingleWebPageExample> {
                           ),
                           Icon(
                             Icons.flutter_dash,
-                            color: Theme.of(context).colorScheme.onPrimary,
+                            color: Theme.of(context).colorScheme.onPrimaryContainer,
                             size: 40,
                           )
                         ],
@@ -200,7 +200,7 @@ class Section1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height,
-      color: Theme.of(context).colorScheme.primary,
+      color: Theme.of(context).colorScheme.primaryContainer,
       alignment: Alignment.center,
       child: Stack(
         alignment: Alignment.center,
@@ -210,7 +210,7 @@ class Section1 extends StatelessWidget {
             style: TextStyle(
                 fontSize: 240,
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.secondary),
+                color: Theme.of(context).colorScheme.primary),
           ),
           Padding(
             padding: const EdgeInsets.only(
@@ -280,7 +280,7 @@ class Section3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 400,
-      color: Theme.of(context).colorScheme.primary,
+      color: Theme.of(context).colorScheme.primaryContainer,
       alignment: Alignment.center,
       child: Text(
         "Section 3",
@@ -314,7 +314,7 @@ class Section5 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 400,
-      color: Theme.of(context).colorScheme.primary,
+      color: Theme.of(context).colorScheme.primaryContainer,
       alignment: Alignment.center,
       child: Text(
         "Section 5",
@@ -351,8 +351,8 @@ class SiteButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-        backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.secondary),
-        foregroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.onSecondary),
+        backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.primary),
+        foregroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.onPrimary),
         padding: const MaterialStatePropertyAll(
           EdgeInsets.symmetric(
             horizontal: 32,

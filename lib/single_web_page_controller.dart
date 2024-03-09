@@ -24,6 +24,16 @@ class SingleWebPageController extends ScrollController {
   Map<int, double> bottomSnapOffsets = {};
   int sectionIndex = 0;
   double lastCurrentPixels = 0;
+  void Function(int index)? _onScrollAnimationStart;
+  void Function(int index)? _onScrollAnimationEnd;
+
+  void onScrollAnimationStart(void Function(int index) onScrollAnimationStart) {
+    _onScrollAnimationStart = onScrollAnimationStart;
+  }
+
+  void onScrollAnimationEnd(void Function(int index) onScrollAnimationEnd) {
+    _onScrollAnimationEnd = onScrollAnimationEnd;
+  }
 
   void updateSectionHeights(int index, double height) {
     sectionHeights.update(
@@ -32,14 +42,14 @@ class SingleWebPageController extends ScrollController {
       ifAbsent: () => height,
     );
 
-    calculateTopSnapOffsets();
-    calculateCenterSnapOffsets();
-    calculateBottomSnapOffsets();
+    _calculateTopSnapOffsets();
+    _calculateCenterSnapOffsets();
+    _calculateBottomSnapOffsets();
 
-    fixCurrentSectionIndexOffset();
+    _fixCurrentSectionIndexOffset();
   }
 
-  void calculateTopSnapOffsets() {
+  void _calculateTopSnapOffsets() {
     for (var index in sectionHeights.keys) {
       double offset = 0;
       for (var i = 0; i < index; i++) {
@@ -50,7 +60,7 @@ class SingleWebPageController extends ScrollController {
         offset += topSnapExtraOffset;
       }
 
-      offset = fixOffsetBeyondLimits(offset);
+      offset = _fixOffsetBeyondLimits(offset);
 
       topSnapOffsets.update(
         index,
@@ -60,7 +70,7 @@ class SingleWebPageController extends ScrollController {
     }
   }
 
-  void calculateCenterSnapOffsets() {
+  void _calculateCenterSnapOffsets() {
     topSnapOffsets.forEach((index, topSnapOffset) {
       final viewportHeight = position.viewportDimension;
       final viewportHeightMinusSectionHeight =
@@ -74,7 +84,7 @@ class SingleWebPageController extends ScrollController {
         offset += centerSnapExtraOffset;
       }
 
-      offset = fixOffsetBeyondLimits(offset);
+      offset = _fixOffsetBeyondLimits(offset);
 
       centerSnapOffsets.update(
         index,
@@ -84,7 +94,7 @@ class SingleWebPageController extends ScrollController {
     });
   }
 
-  void calculateBottomSnapOffsets() {
+  void _calculateBottomSnapOffsets() {
     for (var index in sectionHeights.keys) {
       double offset = 0;
       for (var i = 0; i < index; i++) {
@@ -99,7 +109,7 @@ class SingleWebPageController extends ScrollController {
         offset += bottomSnapExtraOffset;
       }
 
-      offset = fixOffsetBeyondLimits(offset);
+      offset = _fixOffsetBeyondLimits(offset);
 
       bottomSnapOffsets.update(
         index,
@@ -109,7 +119,7 @@ class SingleWebPageController extends ScrollController {
     }
   }
 
-  double fixOffsetBeyondLimits(double offset) {
+  double _fixOffsetBeyondLimits(double offset) {
     if (offset < 0) {
       return 0;
     }
@@ -119,7 +129,7 @@ class SingleWebPageController extends ScrollController {
     return offset;
   }
 
-  void fixCurrentSectionIndexOffset() {
+  void _fixCurrentSectionIndexOffset() {
     late final Map<int, double> snapOffsets;
     final snap = snaps.elementAtOrNull(sectionIndex);
     switch (snap) {
@@ -182,7 +192,13 @@ class SingleWebPageController extends ScrollController {
     if (position.isScrollingNotifier.value) {
       return;
     }
+    if(_onScrollAnimationStart != null) {
+      _onScrollAnimationStart!(sectionIndex);
+    }
     await animateTo(snapOffsets[index]!, duration: duration, curve: curve);
     sectionIndex = index;
+    if(_onScrollAnimationEnd != null) {
+      _onScrollAnimationEnd!(sectionIndex);
+    }
   }
 }

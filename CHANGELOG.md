@@ -1,3 +1,6 @@
+## 1.0.17
+Scroll animation start and scroll animation end index listeners added.
+
 ## 1.0.16
 Bugs fixed.
 

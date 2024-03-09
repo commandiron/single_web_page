@@ -1,3 +1,6 @@
+## 1.0.16
+Bugs fixed.
+
 ## 1.0.15
 Code refactoring.
 

@@ -54,7 +54,13 @@ class _SingleWebPageExampleState extends State<SingleWebPageExample> {
   @override
   void initState() {
     _controller = SingleWebPageController(
-      snaps: [Snap.bottomSnap, Snap.topSnap, Snap.centerSnap, Snap.bottomSnap, Snap.bottomSnap],
+      snaps: [
+        Snap.bottomSnap,
+        Snap.topSnap,
+        Snap.centerSnap,
+        Snap.bottomSnap,
+        Snap.bottomSnap
+      ],
       topSnapExtraOffset: -collapsedHeight,
       centerSnapExtraOffset: collapsedHeight,
     );
@@ -102,7 +108,8 @@ class _SingleWebPageExampleState extends State<SingleWebPageExample> {
                       .entries
                       .map(
                         (e) => MenuButton(
-                          onPressed: () => _controller.animateToSectionIndex(e.key),
+                          onPressed: () =>
+                              _controller.animateToSectionIndex(e.key),
                           text: e.value.title,
                         ),
                       )
@@ -267,7 +274,9 @@ class Section2 extends StatelessWidget {
       alignment: Alignment.center,
       child: Text(
         "Section 2",
-        style: TextStyle(fontSize: 50, color: Theme.of(context).colorScheme.onSecondaryContainer),
+        style: TextStyle(
+            fontSize: 50,
+            color: Theme.of(context).colorScheme.onSecondaryContainer),
       ),
     );
   }
@@ -284,7 +293,9 @@ class Section3 extends StatelessWidget {
       alignment: Alignment.center,
       child: Text(
         "Section 3",
-        style: TextStyle(fontSize: 50, color: Theme.of(context).colorScheme.onSecondaryContainer),
+        style: TextStyle(
+            fontSize: 50,
+            color: Theme.of(context).colorScheme.onSecondaryContainer),
       ),
     );
   }
@@ -301,7 +312,9 @@ class Section4 extends StatelessWidget {
       alignment: Alignment.center,
       child: Text(
         "Section 4",
-        style: TextStyle(fontSize: 50, color: Theme.of(context).colorScheme.onSecondaryContainer),
+        style: TextStyle(
+            fontSize: 50,
+            color: Theme.of(context).colorScheme.onSecondaryContainer),
       ),
     );
   }
@@ -318,7 +331,9 @@ class Section5 extends StatelessWidget {
       alignment: Alignment.center,
       child: Text(
         "Section 5",
-        style: TextStyle(fontSize: 50, color: Theme.of(context).colorScheme.onSecondaryContainer),
+        style: TextStyle(
+            fontSize: 50,
+            color: Theme.of(context).colorScheme.onSecondaryContainer),
       ),
     );
   }
@@ -335,7 +350,8 @@ class MenuButton extends StatelessWidget {
     return TextButton(
         onPressed: onPressed,
         style: ButtonStyle(
-          foregroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.onPrimary),
+          foregroundColor:
+              MaterialStatePropertyAll(Theme.of(context).colorScheme.onPrimary),
         ),
         child: Text(
           text,
@@ -351,8 +367,10 @@ class SiteButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-        backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.primary),
-        foregroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.onPrimary),
+        backgroundColor:
+            MaterialStatePropertyAll(Theme.of(context).colorScheme.primary),
+        foregroundColor:
+            MaterialStatePropertyAll(Theme.of(context).colorScheme.onPrimary),
         padding: const MaterialStatePropertyAll(
           EdgeInsets.symmetric(
             horizontal: 32,

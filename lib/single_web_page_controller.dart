@@ -24,14 +24,16 @@ class SingleWebPageController extends ScrollController {
   Map<int, double> bottomSnapOffsets = {};
   int sectionIndex = 0;
   double lastCurrentPixels = 0;
-  void Function(int index)? _onScrollAnimationStart;
-  void Function(int index)? _onScrollAnimationEnd;
+  void Function(int currentIndex, int targetIndex)? _onScrollAnimationStart;
+  void Function(int currentIndex)? _onScrollAnimationEnd;
 
-  void onScrollAnimationStart(void Function(int index) onScrollAnimationStart) {
+  void onScrollAnimationStart(
+      void Function(int currentIndex, int targetIndex) onScrollAnimationStart) {
     _onScrollAnimationStart = onScrollAnimationStart;
   }
 
-  void onScrollAnimationEnd(void Function(int index) onScrollAnimationEnd) {
+  void onScrollAnimationEnd(
+      void Function(int currentIndex) onScrollAnimationEnd) {
     _onScrollAnimationEnd = onScrollAnimationEnd;
   }
 
@@ -192,12 +194,12 @@ class SingleWebPageController extends ScrollController {
     if (position.isScrollingNotifier.value) {
       return;
     }
-    if(_onScrollAnimationStart != null) {
-      _onScrollAnimationStart!(sectionIndex);
+    if (_onScrollAnimationStart != null) {
+      _onScrollAnimationStart!(sectionIndex, index);
     }
     await animateTo(snapOffsets[index]!, duration: duration, curve: curve);
     sectionIndex = index;
-    if(_onScrollAnimationEnd != null) {
+    if (_onScrollAnimationEnd != null) {
       _onScrollAnimationEnd!(sectionIndex);
     }
   }

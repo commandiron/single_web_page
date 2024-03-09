@@ -24,10 +24,10 @@ class _HowToUseSingleWebPageState extends State<HowToUseSingleWebPage> {
       //Specify extra offset for bottomSnaps.
       bottomSnapExtraOffset: 0,
     );
-    _controller.onScrollAnimationStart((index) {
+    _controller.onScrollAnimationStart((currentIndex, targetIndex) {
       //Listen index on animation start.
     });
-    _controller.onScrollAnimationEnd((index) {
+    _controller.onScrollAnimationEnd((currentIndex) {
       //Listen index on animation end.
     });
     super.initState();

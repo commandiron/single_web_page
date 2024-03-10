@@ -27,16 +27,6 @@ class SingleWebPageController extends ScrollController {
   void Function(int currentIndex, int targetIndex)? _onScrollAnimationStart;
   void Function(int currentIndex)? _onScrollAnimationEnd;
 
-  void onScrollAnimationStart(
-      void Function(int currentIndex, int targetIndex) onScrollAnimationStart) {
-    _onScrollAnimationStart = onScrollAnimationStart;
-  }
-
-  void onScrollAnimationEnd(
-      void Function(int currentIndex) onScrollAnimationEnd) {
-    _onScrollAnimationEnd = onScrollAnimationEnd;
-  }
-
   void updateSectionHeights(int index, double height) {
     sectionHeights.update(
       index,
@@ -49,6 +39,15 @@ class SingleWebPageController extends ScrollController {
     _calculateBottomSnapOffsets();
 
     _fixCurrentSectionIndexOffset();
+  }
+
+  void onScrollAnimationStart(
+      void Function(int currentIndex, int targetIndex) onScrollAnimationStart) {
+    _onScrollAnimationStart = onScrollAnimationStart;
+  }
+
+  void onScrollAnimationEnd(void Function(int currentIndex) onScrollAnimationEnd) {
+    _onScrollAnimationEnd = onScrollAnimationEnd;
   }
 
   void _calculateTopSnapOffsets() {
@@ -75,12 +74,9 @@ class SingleWebPageController extends ScrollController {
   void _calculateCenterSnapOffsets() {
     topSnapOffsets.forEach((index, topSnapOffset) {
       final viewportHeight = position.viewportDimension;
-      final viewportHeightMinusSectionHeight =
-          viewportHeight - sectionHeights[index]!;
-      final viewportHeightMinusSectionHeightDivideTwo =
-          viewportHeightMinusSectionHeight / 2;
-      double offset =
-          topSnapOffsets[index]! - viewportHeightMinusSectionHeightDivideTwo;
+      final viewportHeightMinusSectionHeight = viewportHeight - sectionHeights[index]!;
+      final viewportHeightMinusSectionHeightDivideTwo = viewportHeightMinusSectionHeight / 2;
+      double offset = topSnapOffsets[index]! - viewportHeightMinusSectionHeightDivideTwo;
 
       if (index != 0) {
         offset += centerSnapExtraOffset;
@@ -103,8 +99,7 @@ class SingleWebPageController extends ScrollController {
         offset += sectionHeights[i] ?? 0;
       }
       final viewportHeight = position.viewportDimension;
-      final viewportHeightMinusSectionHeight =
-          viewportHeight - sectionHeights[index]!;
+      final viewportHeightMinusSectionHeight = viewportHeight - sectionHeights[index]!;
       offset = offset - viewportHeightMinusSectionHeight;
 
       if (index != 0) {
@@ -133,12 +128,11 @@ class SingleWebPageController extends ScrollController {
 
   void _fixCurrentSectionIndexOffset() {
     final correctionOffset = getSnapOffsetFromIndex(sectionIndex);
-    if(correctionOffset == null) {
+    if (correctionOffset == null) {
       return;
     }
     if (position.pixels != correctionOffset) {
-      animateTo(correctionOffset,
-          duration: const Duration(milliseconds: 500), curve: Curves.ease);
+      animateTo(correctionOffset, duration: const Duration(milliseconds: 500), curve: Curves.ease);
     }
   }
 
@@ -168,7 +162,7 @@ class SingleWebPageController extends ScrollController {
       return;
     }
     final snapOffset = getSnapOffsetFromIndex(index);
-    if(snapOffset == null) {
+    if (snapOffset == null) {
       return;
     }
     if (_onScrollAnimationStart != null) {

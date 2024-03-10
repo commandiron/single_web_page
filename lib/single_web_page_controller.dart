@@ -132,22 +132,10 @@ class SingleWebPageController extends ScrollController {
   }
 
   void _fixCurrentSectionIndexOffset() {
-    late final Map<int, double> snapOffsets;
-    final snap = snaps.elementAtOrNull(sectionIndex);
-    switch (snap) {
-      case null:
-        snapOffsets = topSnapOffsets;
-      case Snap.topSnap:
-        snapOffsets = topSnapOffsets;
-      case Snap.centerSnap:
-        snapOffsets = centerSnapOffsets;
-      case Snap.bottomSnap:
-        snapOffsets = bottomSnapOffsets;
-    }
-    if (!snapOffsets.containsKey(sectionIndex)) {
+    final correctionOffset = getSnapOffsetFromIndex(sectionIndex);
+    if(correctionOffset == null) {
       return;
     }
-    final correctionOffset = snapOffsets[sectionIndex]!;
     if (position.pixels != correctionOffset) {
       animateTo(correctionOffset,
           duration: const Duration(milliseconds: 500), curve: Curves.ease);
@@ -176,6 +164,24 @@ class SingleWebPageController extends ScrollController {
     if (index < 0) {
       return;
     }
+    if (position.isScrollingNotifier.value) {
+      return;
+    }
+    final snapOffset = getSnapOffsetFromIndex(index);
+    if(snapOffset == null) {
+      return;
+    }
+    if (_onScrollAnimationStart != null) {
+      _onScrollAnimationStart!(sectionIndex, index);
+    }
+    await animateTo(snapOffset, duration: duration, curve: curve);
+    sectionIndex = index;
+    if (_onScrollAnimationEnd != null) {
+      _onScrollAnimationEnd!(sectionIndex);
+    }
+  }
+
+  double? getSnapOffsetFromIndex(int index) {
     late final Map<int, double> snapOffsets;
     final snap = snaps.elementAtOrNull(index);
     switch (snap) {
@@ -189,18 +195,8 @@ class SingleWebPageController extends ScrollController {
         snapOffsets = bottomSnapOffsets;
     }
     if (!snapOffsets.containsKey(index)) {
-      return;
+      return null;
     }
-    if (position.isScrollingNotifier.value) {
-      return;
-    }
-    if (_onScrollAnimationStart != null) {
-      _onScrollAnimationStart!(sectionIndex, index);
-    }
-    await animateTo(snapOffsets[index]!, duration: duration, curve: curve);
-    sectionIndex = index;
-    if (_onScrollAnimationEnd != null) {
-      _onScrollAnimationEnd!(sectionIndex);
-    }
+    return snapOffsets[index]!;
   }
 }

@@ -46,7 +46,8 @@ class SingleWebPageController extends ScrollController {
     _onScrollAnimationStart = onScrollAnimationStart;
   }
 
-  void onScrollAnimationEnd(void Function(int currentIndex) onScrollAnimationEnd) {
+  void onScrollAnimationEnd(
+      void Function(int currentIndex) onScrollAnimationEnd) {
     _onScrollAnimationEnd = onScrollAnimationEnd;
   }
 
@@ -74,9 +75,12 @@ class SingleWebPageController extends ScrollController {
   void _calculateCenterSnapOffsets() {
     topSnapOffsets.forEach((index, topSnapOffset) {
       final viewportHeight = position.viewportDimension;
-      final viewportHeightMinusSectionHeight = viewportHeight - sectionHeights[index]!;
-      final viewportHeightMinusSectionHeightDivideTwo = viewportHeightMinusSectionHeight / 2;
-      double offset = topSnapOffsets[index]! - viewportHeightMinusSectionHeightDivideTwo;
+      final viewportHeightMinusSectionHeight =
+          viewportHeight - sectionHeights[index]!;
+      final viewportHeightMinusSectionHeightDivideTwo =
+          viewportHeightMinusSectionHeight / 2;
+      double offset =
+          topSnapOffsets[index]! - viewportHeightMinusSectionHeightDivideTwo;
 
       if (index != 0) {
         offset += centerSnapExtraOffset;
@@ -99,7 +103,8 @@ class SingleWebPageController extends ScrollController {
         offset += sectionHeights[i] ?? 0;
       }
       final viewportHeight = position.viewportDimension;
-      final viewportHeightMinusSectionHeight = viewportHeight - sectionHeights[index]!;
+      final viewportHeightMinusSectionHeight =
+          viewportHeight - sectionHeights[index]!;
       offset = offset - viewportHeightMinusSectionHeight;
 
       if (index != 0) {
@@ -132,7 +137,8 @@ class SingleWebPageController extends ScrollController {
       return;
     }
     if (position.pixels != correctionOffset) {
-      animateTo(correctionOffset, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+      animateTo(correctionOffset,
+          duration: const Duration(milliseconds: 500), curve: Curves.ease);
     }
   }
 

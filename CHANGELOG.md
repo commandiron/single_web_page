@@ -1,3 +1,6 @@
+## 1.0.19
+Code refactoring.
+
 ## 1.0.18
 Bugs fixed.
 

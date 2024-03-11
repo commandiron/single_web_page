@@ -1,3 +1,6 @@
+## 1.1.5
+Performance improvement.
+
 ## 1.1.4
 Bugs fixed.
 

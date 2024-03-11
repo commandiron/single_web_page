@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:single_web_page/adaptive_single_web_page.dart';
 import 'package:single_web_page/single_web_page_controller.dart';
@@ -52,7 +51,7 @@ class _SingleWebPageExampleState extends State<SingleWebPageExample> {
   static const double collapsedHeight = 60;
   static const double toolbarHeight = 0;
 
-  int _currentIndex = 0;
+  final ValueNotifier<int> _currentIndex = ValueNotifier<int>(0);
 
   @override
   void initState() {
@@ -67,14 +66,10 @@ class _SingleWebPageExampleState extends State<SingleWebPageExample> {
       topSnapExtraOffset: -collapsedHeight,
       centerSnapExtraOffset: collapsedHeight,
       onAnimatedScrollStart: (currentIndex, targetIndex) {
-        setState(() {
-          _currentIndex = targetIndex;
-        });
+        _currentIndex.value = targetIndex;
       },
       onScrollEnd: (currentIndex) {
-        setState(() {
-          _currentIndex = currentIndex;
-        });
+        _currentIndex.value = currentIndex;
       },
     );
     super.initState();
@@ -117,19 +112,24 @@ class _SingleWebPageExampleState extends State<SingleWebPageExample> {
                 ),
                 alignment: Alignment.centerLeft,
                 child: FittedBox(
-                  child: Row(
-                    children: Section.sections
-                        .asMap()
-                        .entries
-                        .map(
-                          (e) => MenuButton(
-                            onPressed: () =>
-                                _controller.animateToSectionIndex(e.key),
-                            isHighlighted: _currentIndex == e.key,
-                            text: e.value.title,
-                          ),
-                        )
-                        .toList(),
+                  child: ValueListenableBuilder(
+                    valueListenable: _currentIndex,
+                    builder: (context, value, child) {
+                      return Row(
+                        children: Section.sections
+                            .asMap()
+                            .entries
+                            .map(
+                              (e) => MenuButton(
+                                onPressed: () =>
+                                    _controller.animateToSectionIndex(e.key),
+                                isHighlighted: value == e.key,
+                                text: e.value.title,
+                              ),
+                            )
+                            .toList(),
+                      );
+                    },
                   ),
                 ),
               ),

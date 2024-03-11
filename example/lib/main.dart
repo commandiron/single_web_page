@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:single_web_page/adaptive_single_web_page.dart';
 import 'package:single_web_page/single_web_page_controller.dart';
@@ -99,75 +100,81 @@ class _SingleWebPageExampleState extends State<SingleWebPageExample> {
       pinned: true,
       flexibleSpace: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: 64,
+          horizontal: 16,
         ),
         child: Row(
           children: [
             Expanded(
+              flex: 2,
               child: Container(
                 padding: const EdgeInsets.symmetric(
                   vertical: 16,
                 ),
                 alignment: Alignment.centerLeft,
-                child: Row(
-                  children: Section.sections
-                      .asMap()
-                      .entries
-                      .map(
-                        (e) => MenuButton(
-                          onPressed: () =>
-                              _controller.animateToSectionIndex(e.key),
-                          isHighlighted: _currentIndex == e.key,
-                          text: e.value.title,
-                        ),
-                      )
-                      .toList(),
+                child: FittedBox(
+                  child: Row(
+                    children: Section.sections
+                        .asMap()
+                        .entries
+                        .map(
+                          (e) => MenuButton(
+                            onPressed: () =>
+                                _controller.animateToSectionIndex(e.key),
+                            isHighlighted: _currentIndex == e.key,
+                            text: e.value.title,
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ),
               ),
             ),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                alignment: Alignment.center,
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    if (constraints.maxHeight < 40) {
-                      return const SizedBox.shrink();
-                    }
-                    return const FittedBox(
-                      child: Row(
-                        children: [
-                          Text(
-                            "FLUTTER WEB",
-                            style: TextStyle(
-                              fontSize: 40,
-                              color: Color(0xffBABABA),
+            if(MediaQuery.of(context).size.width > 1200)
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  alignment: Alignment.center,
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      if (constraints.maxHeight < 40) {
+                        return const SizedBox.shrink();
+                      }
+                      return const FittedBox(
+                        child: Row(
+                          children: [
+                            Text(
+                              "FLUTTER WEB",
+                              style: TextStyle(
+                                fontSize: 40,
+                                color: Color(0xffBABABA),
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            width: 16,
-                          ),
-                          Icon(
-                            Icons.flutter_dash,
-                            color: Color(0xffBABABA),
-                            size: 40,
-                          )
-                        ],
-                      ),
-                    );
-                  },
+                            SizedBox(
+                              width: 16,
+                            ),
+                            Icon(
+                              Icons.flutter_dash,
+                              color: Color(0xffBABABA),
+                              size: 40,
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 16,
+            if(MediaQuery.of(context).size.width > 1200)
+              Expanded(
+                flex: 2,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 16,
+                  ),
+                  alignment: Alignment.centerRight,
+                  child: const FittedBox(child: SiteButton()),
                 ),
-                alignment: Alignment.centerRight,
-                child: const FittedBox(child: SiteButton()),
               ),
-            ),
           ],
         ),
       ),
@@ -220,12 +227,14 @@ class Section1 extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          Text(
-            "FLUTTER WEB",
-            style: TextStyle(
-                fontSize: 240,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary),
+          FittedBox(
+            child: Text(
+              "FLUTTER WEB",
+              style: TextStyle(
+                  fontSize: 240,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(

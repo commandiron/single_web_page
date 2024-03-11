@@ -30,7 +30,7 @@ class _HowToUseSingleWebPageState extends State<HowToUseSingleWebPage> {
         //Listen index on animated scroll end.
       },
       onScrollEnd: (lastVisibleIndex) {
-        //Listen index on scroll end.
+        //Listen last visible index on (non-animated) scroll end.
       },
     );
     super.initState();

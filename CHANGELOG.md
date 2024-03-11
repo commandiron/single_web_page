@@ -1,3 +1,8 @@
+## 1.1.0
+Bugs fixed, code refactoring.
+
+Feature: Now, you can listen last visible index on (non-animated) scroll end.
+
 ## 1.0.19
 Code refactoring.
 

@@ -1,3 +1,6 @@
+## 1.1.3
+Example updated.
+
 ## 1.1.2
 Readme edited.
 

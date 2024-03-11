@@ -1,3 +1,6 @@
+## 1.1.2
+Readme edited.
+
 ## 1.1.1
 Single Wep Page test site deployed.
 

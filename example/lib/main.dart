@@ -231,9 +231,10 @@ class Section1 extends StatelessWidget {
             child: Text(
               "FLUTTER WEB",
               style: TextStyle(
-                  fontSize: 240,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary),
+                fontSize: 240,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.primary,
+              ),
             ),
           ),
           Padding(

@@ -17,18 +17,20 @@ class SingleWebPageController extends ScrollController {
     this.onScrollEnd,
   }) {
     addListener(() {
-      int visibleIndex = 0;
-      _sectionHeights.forEach((index, _) {
-        final snapOffset = _bottomSnapOffsets[index];
-        if (snapOffset == null) {
-          return;
+      if (!_isAnimating) {
+        int visibleIndex = 0;
+        _sectionHeights.forEach((index, _) {
+          final snapOffset = _bottomSnapOffsets[index];
+          if (snapOffset == null) {
+            return;
+          }
+          if (position.pixels >= snapOffset) {
+            visibleIndex = index;
+          }
+        });
+        if (onScrollEnd != null) {
+          onScrollEnd!(visibleIndex);
         }
-        if (position.pixels >= snapOffset) {
-          visibleIndex = index;
-        }
-      });
-      if (onScrollEnd != null) {
-        onScrollEnd!(visibleIndex);
       }
     });
   }
@@ -46,6 +48,7 @@ class SingleWebPageController extends ScrollController {
   final Map<int, double> _centerSnapOffsets = {};
   final Map<int, double> _bottomSnapOffsets = {};
   int _lastAnimatedIndex = 0;
+  bool _isAnimating = false;
 
   void updateSectionHeights(int index, double height) {
     _sectionHeights.update(
@@ -186,7 +189,9 @@ class SingleWebPageController extends ScrollController {
     if (onAnimatedScrollStart != null) {
       onAnimatedScrollStart!(_lastAnimatedIndex, index);
     }
+    _isAnimating = true;
     await animateTo(snapOffset, duration: duration, curve: curve);
+    _isAnimating = false;
     _lastAnimatedIndex = index;
     if (onAnimatedScrollEnd != null) {
       onAnimatedScrollEnd!(_lastAnimatedIndex);

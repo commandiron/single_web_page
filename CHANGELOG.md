@@ -1,3 +1,6 @@
+## 1.1.4
+Bugs fixed.
+
 ## 1.1.3
 Example updated.
 

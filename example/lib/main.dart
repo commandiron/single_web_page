@@ -71,6 +71,11 @@ class _SingleWebPageExampleState extends State<SingleWebPageExample> {
           _currentIndex = targetIndex;
         });
       },
+      onScrollEnd: (currentIndex) {
+        setState(() {
+          _currentIndex = currentIndex;
+        });
+      },
     );
     super.initState();
   }

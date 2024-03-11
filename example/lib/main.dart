@@ -129,7 +129,7 @@ class _SingleWebPageExampleState extends State<SingleWebPageExample> {
                 ),
               ),
             ),
-            if(MediaQuery.of(context).size.width > 1200)
+            if (MediaQuery.of(context).size.width > 1200)
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 16),
@@ -164,7 +164,7 @@ class _SingleWebPageExampleState extends State<SingleWebPageExample> {
                   ),
                 ),
               ),
-            if(MediaQuery.of(context).size.width > 1200)
+            if (MediaQuery.of(context).size.width > 1200)
               Expanded(
                 flex: 2,
                 child: Container(

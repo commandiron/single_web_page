@@ -12,23 +12,43 @@ class SingleWebPageController extends ScrollController {
     this.topSnapExtraOffset = 0,
     this.centerSnapExtraOffset = 0,
     this.bottomSnapExtraOffset = 0,
-  });
+    this.onAnimatedScrollStart,
+    this.onAnimatedScrollEnd,
+    this.onScrollEnd,
+  }) {
+    addListener(() {
+      int visibleIndex = 0;
+      _sectionHeights.forEach((index, _) {
+        final snapOffset = _bottomSnapOffsets[index];
+        if (snapOffset == null) {
+          return;
+        }
+        if (position.pixels >= snapOffset) {
+          visibleIndex = index;
+        }
+      });
+      if (onScrollEnd != null) {
+        onScrollEnd!(visibleIndex);
+      }
+    });
+  }
 
   final List<Snap> snaps;
   final double topSnapExtraOffset;
   final double centerSnapExtraOffset;
   final double bottomSnapExtraOffset;
-  Map<int, double> sectionHeights = {};
-  Map<int, double> topSnapOffsets = {};
-  Map<int, double> centerSnapOffsets = {};
-  Map<int, double> bottomSnapOffsets = {};
-  int sectionIndex = 0;
-  double lastCurrentPixels = 0;
-  void Function(int currentIndex, int targetIndex)? _onScrollAnimationStart;
-  void Function(int currentIndex)? _onScrollAnimationEnd;
+  final void Function(int currentIndex, int targetIndex)? onAnimatedScrollStart;
+  final void Function(int currentIndex)? onAnimatedScrollEnd;
+  final void Function(int lastVisibleIndex)? onScrollEnd;
+
+  final Map<int, double> _sectionHeights = {};
+  final Map<int, double> _topSnapOffsets = {};
+  final Map<int, double> _centerSnapOffsets = {};
+  final Map<int, double> _bottomSnapOffsets = {};
+  int _lastAnimatedIndex = 0;
 
   void updateSectionHeights(int index, double height) {
-    sectionHeights.update(
+    _sectionHeights.update(
       index,
       (value) => height,
       ifAbsent: () => height,
@@ -38,24 +58,14 @@ class SingleWebPageController extends ScrollController {
     _calculateCenterSnapOffsets();
     _calculateBottomSnapOffsets();
 
-    _fixCurrentSectionIndexOffset();
-  }
-
-  void onScrollAnimationStart(
-      void Function(int currentIndex, int targetIndex) onScrollAnimationStart) {
-    _onScrollAnimationStart = onScrollAnimationStart;
-  }
-
-  void onScrollAnimationEnd(
-      void Function(int currentIndex) onScrollAnimationEnd) {
-    _onScrollAnimationEnd = onScrollAnimationEnd;
+    _fixLastAnimatedIndexOffset();
   }
 
   void _calculateTopSnapOffsets() {
-    for (var index in sectionHeights.keys) {
+    for (var index in _sectionHeights.keys) {
       double offset = 0;
       for (var i = 0; i < index; i++) {
-        offset += sectionHeights[i] ?? 0;
+        offset += _sectionHeights[i] ?? 0;
       }
 
       if (index != 0) {
@@ -64,7 +74,7 @@ class SingleWebPageController extends ScrollController {
 
       offset = _fixOffsetBeyondLimits(offset);
 
-      topSnapOffsets.update(
+      _topSnapOffsets.update(
         index,
         (value) => offset,
         ifAbsent: () => offset,
@@ -73,14 +83,14 @@ class SingleWebPageController extends ScrollController {
   }
 
   void _calculateCenterSnapOffsets() {
-    topSnapOffsets.forEach((index, topSnapOffset) {
+    _topSnapOffsets.forEach((index, topSnapOffset) {
       final viewportHeight = position.viewportDimension;
       final viewportHeightMinusSectionHeight =
-          viewportHeight - sectionHeights[index]!;
+          viewportHeight - _sectionHeights[index]!;
       final viewportHeightMinusSectionHeightDivideTwo =
           viewportHeightMinusSectionHeight / 2;
       double offset =
-          topSnapOffsets[index]! - viewportHeightMinusSectionHeightDivideTwo;
+          _topSnapOffsets[index]! - viewportHeightMinusSectionHeightDivideTwo;
 
       if (index != 0) {
         offset += centerSnapExtraOffset;
@@ -88,7 +98,7 @@ class SingleWebPageController extends ScrollController {
 
       offset = _fixOffsetBeyondLimits(offset);
 
-      centerSnapOffsets.update(
+      _centerSnapOffsets.update(
         index,
         (value) => offset,
         ifAbsent: () => offset,
@@ -97,14 +107,14 @@ class SingleWebPageController extends ScrollController {
   }
 
   void _calculateBottomSnapOffsets() {
-    for (var index in sectionHeights.keys) {
+    for (var index in _sectionHeights.keys) {
       double offset = 0;
       for (var i = 0; i < index; i++) {
-        offset += sectionHeights[i] ?? 0;
+        offset += _sectionHeights[i] ?? 0;
       }
       final viewportHeight = position.viewportDimension;
       final viewportHeightMinusSectionHeight =
-          viewportHeight - sectionHeights[index]!;
+          viewportHeight - _sectionHeights[index]!;
       offset = offset - viewportHeightMinusSectionHeight;
 
       if (index != 0) {
@@ -113,7 +123,7 @@ class SingleWebPageController extends ScrollController {
 
       offset = _fixOffsetBeyondLimits(offset);
 
-      bottomSnapOffsets.update(
+      _bottomSnapOffsets.update(
         index,
         (value) => offset,
         ifAbsent: () => offset,
@@ -131,8 +141,8 @@ class SingleWebPageController extends ScrollController {
     return offset;
   }
 
-  void _fixCurrentSectionIndexOffset() {
-    final correctionOffset = getSnapOffsetFromIndex(sectionIndex);
+  void _fixLastAnimatedIndexOffset() {
+    final correctionOffset = _getSnapOffsetFromIndex(_lastAnimatedIndex);
     if (correctionOffset == null) {
       return;
     }
@@ -146,14 +156,16 @@ class SingleWebPageController extends ScrollController {
     Duration duration = const Duration(milliseconds: 1000),
     Curve curve = Curves.ease,
   }) {
-    animateToSectionIndex(sectionIndex + 1, duration: duration, curve: curve);
+    animateToSectionIndex(_lastAnimatedIndex + 1,
+        duration: duration, curve: curve);
   }
 
   animateToPreviousSectionIndex({
     Duration duration = const Duration(milliseconds: 1000),
     Curve curve = Curves.ease,
   }) {
-    animateToSectionIndex(sectionIndex - 1, duration: duration, curve: curve);
+    animateToSectionIndex(_lastAnimatedIndex - 1,
+        duration: duration, curve: curve);
   }
 
   Future<void> animateToSectionIndex(
@@ -167,32 +179,32 @@ class SingleWebPageController extends ScrollController {
     if (position.isScrollingNotifier.value) {
       return;
     }
-    final snapOffset = getSnapOffsetFromIndex(index);
+    final snapOffset = _getSnapOffsetFromIndex(index);
     if (snapOffset == null) {
       return;
     }
-    if (_onScrollAnimationStart != null) {
-      _onScrollAnimationStart!(sectionIndex, index);
+    if (onAnimatedScrollStart != null) {
+      onAnimatedScrollStart!(_lastAnimatedIndex, index);
     }
     await animateTo(snapOffset, duration: duration, curve: curve);
-    sectionIndex = index;
-    if (_onScrollAnimationEnd != null) {
-      _onScrollAnimationEnd!(sectionIndex);
+    _lastAnimatedIndex = index;
+    if (onAnimatedScrollEnd != null) {
+      onAnimatedScrollEnd!(_lastAnimatedIndex);
     }
   }
 
-  double? getSnapOffsetFromIndex(int index) {
+  double? _getSnapOffsetFromIndex(int index) {
     late final Map<int, double> snapOffsets;
     final snap = snaps.elementAtOrNull(index);
     switch (snap) {
       case null:
-        snapOffsets = topSnapOffsets;
+        snapOffsets = _topSnapOffsets;
       case Snap.topSnap:
-        snapOffsets = topSnapOffsets;
+        snapOffsets = _topSnapOffsets;
       case Snap.centerSnap:
-        snapOffsets = centerSnapOffsets;
+        snapOffsets = _centerSnapOffsets;
       case Snap.bottomSnap:
-        snapOffsets = bottomSnapOffsets;
+        snapOffsets = _bottomSnapOffsets;
     }
     if (!snapOffsets.containsKey(index)) {
       return null;

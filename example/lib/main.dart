@@ -51,11 +51,13 @@ class _SingleWebPageExampleState extends State<SingleWebPageExample> {
   static const double collapsedHeight = 60;
   static const double toolbarHeight = 0;
 
+  int _currentIndex = 0;
+
   @override
   void initState() {
     _controller = SingleWebPageController(
       snaps: [
-        Snap.bottomSnap,
+        Snap.topSnap,
         Snap.topSnap,
         Snap.centerSnap,
         Snap.bottomSnap,
@@ -63,6 +65,11 @@ class _SingleWebPageExampleState extends State<SingleWebPageExample> {
       ],
       topSnapExtraOffset: -collapsedHeight,
       centerSnapExtraOffset: collapsedHeight,
+      onAnimatedScrollStart: (currentIndex, targetIndex) {
+        setState(() {
+          _currentIndex = targetIndex;
+        });
+      },
     );
     super.initState();
   }
@@ -110,6 +117,7 @@ class _SingleWebPageExampleState extends State<SingleWebPageExample> {
                         (e) => MenuButton(
                           onPressed: () =>
                               _controller.animateToSectionIndex(e.key),
+                          isHighlighted: _currentIndex == e.key,
                           text: e.value.title,
                         ),
                       )
@@ -340,9 +348,15 @@ class Section5 extends StatelessWidget {
 }
 
 class MenuButton extends StatelessWidget {
-  const MenuButton({super.key, this.onPressed, required this.text});
+  const MenuButton({
+    super.key,
+    this.onPressed,
+    required this.isHighlighted,
+    required this.text,
+  });
 
   final void Function()? onPressed;
+  final bool isHighlighted;
   final String text;
 
   @override
@@ -350,8 +364,11 @@ class MenuButton extends StatelessWidget {
     return TextButton(
         onPressed: onPressed,
         style: ButtonStyle(
-          foregroundColor:
-              MaterialStatePropertyAll(Theme.of(context).colorScheme.onPrimary),
+          foregroundColor: MaterialStatePropertyAll(
+            isHighlighted
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).colorScheme.onPrimary,
+          ),
         ),
         child: Text(
           text,

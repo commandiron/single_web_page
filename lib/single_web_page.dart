@@ -79,9 +79,15 @@ class _WidgetSizeNotifierState extends State<_WidgetSizeNotifier> {
     return LayoutBuilder(
       builder: (context, constraints) {
         SchedulerBinding.instance.addPostFrameCallback(postFrameCallback);
-        return Container(
-          key: widgetKey,
-          child: widget.widget,
+        return NotificationListener<SizeChangedLayoutNotification>(
+          onNotification: (notification) {
+            SchedulerBinding.instance.addPostFrameCallback(postFrameCallback);
+            return true;
+          },
+          child: SizeChangedLayoutNotifier(
+            key: widgetKey,
+            child: widget.widget,
+          ),
         );
       },
     );

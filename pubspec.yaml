@@ -3,7 +3,7 @@ description: "Create Single Web Page Layout with adaptive scrollable implementat
 homepage: https://github.com/commandiron/single_web_page
 repository: https://github.com/commandiron/single_web_page
 
-version: 1.1.5
+version: 1.1.6
 
 environment:
   sdk: '>=3.2.2 <4.0.0'

@@ -63,6 +63,12 @@ class _WidgetSizeNotifierState extends State<_WidgetSizeNotifier> {
   GlobalKey widgetKey = GlobalKey();
   Size oldSize = Size.zero;
 
+  @override
+  void initState() {
+    SchedulerBinding.instance.addPostFrameCallback(postFrameCallback);
+    super.initState();
+  }
+
   void postFrameCallback(_) {
     final BuildContext? context = widgetKey.currentContext;
     if (context == null) return;
@@ -76,7 +82,6 @@ class _WidgetSizeNotifierState extends State<_WidgetSizeNotifier> {
 
   @override
   Widget build(BuildContext context) {
-    SchedulerBinding.instance.addPostFrameCallback(postFrameCallback);
     return NotificationListener<SizeChangedLayoutNotification>(
       onNotification: (notification) {
         SchedulerBinding.instance.addPostFrameCallback(postFrameCallback);

@@ -51,14 +51,13 @@ class SingleWebPageController extends ScrollController {
   bool _isAnimating = false;
 
   void updateSectionHeights(int index, double height) {
-
-    bool isUpdateSameValue = false;
+    bool sameValueFlag = false;
 
     _sectionHeights.update(
       index,
       (value) {
-        if(value == height) {
-          isUpdateSameValue = true;
+        if (value == height) {
+          sameValueFlag = true;
         }
         return height;
       },
@@ -67,7 +66,7 @@ class SingleWebPageController extends ScrollController {
       },
     );
 
-    if(isUpdateSameValue) {
+    if (sameValueFlag) {
       return;
     }
 
@@ -102,9 +101,12 @@ class SingleWebPageController extends ScrollController {
   void _calculateCenterSnapOffsets() {
     _topSnapOffsets.forEach((index, topSnapOffset) {
       final viewportHeight = position.viewportDimension;
-      final viewportHeightMinusSectionHeight = viewportHeight - _sectionHeights[index]!;
-      final viewportHeightMinusSectionHeightDivideTwo = viewportHeightMinusSectionHeight / 2;
-      double offset = _topSnapOffsets[index]! - viewportHeightMinusSectionHeightDivideTwo;
+      final viewportHeightMinusSectionHeight =
+          viewportHeight - _sectionHeights[index]!;
+      final viewportHeightMinusSectionHeightDivideTwo =
+          viewportHeightMinusSectionHeight / 2;
+      double offset =
+          _topSnapOffsets[index]! - viewportHeightMinusSectionHeightDivideTwo;
 
       if (index != 0) {
         offset += centerSnapExtraOffset;
@@ -127,7 +129,8 @@ class SingleWebPageController extends ScrollController {
         offset += _sectionHeights[i] ?? 0;
       }
       final viewportHeight = position.viewportDimension;
-      final viewportHeightMinusSectionHeight = viewportHeight - _sectionHeights[index]!;
+      final viewportHeightMinusSectionHeight =
+          viewportHeight - _sectionHeights[index]!;
       offset = offset - viewportHeightMinusSectionHeight;
 
       if (index != 0) {
@@ -159,24 +162,27 @@ class SingleWebPageController extends ScrollController {
     if (correctionOffset == null) {
       return;
     }
-    if(position.pixels == correctionOffset) {
+    if (position.pixels == correctionOffset) {
       return;
     }
-    animateTo(correctionOffset, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+    animateTo(correctionOffset,
+        duration: const Duration(milliseconds: 500), curve: Curves.ease);
   }
 
   animateToNextSectionIndex({
     Duration duration = const Duration(milliseconds: 1000),
     Curve curve = Curves.ease,
   }) {
-    animateToSectionIndex(_lastAnimatedIndex + 1, duration: duration, curve: curve);
+    animateToSectionIndex(_lastAnimatedIndex + 1,
+        duration: duration, curve: curve);
   }
 
   animateToPreviousSectionIndex({
     Duration duration = const Duration(milliseconds: 1000),
     Curve curve = Curves.ease,
   }) {
-    animateToSectionIndex(_lastAnimatedIndex - 1, duration: duration, curve: curve);
+    animateToSectionIndex(_lastAnimatedIndex - 1,
+        duration: duration, curve: curve);
   }
 
   Future<void> animateToSectionIndex(

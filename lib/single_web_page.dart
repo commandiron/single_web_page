@@ -14,7 +14,7 @@ class SingleWebPage extends StatelessWidget {
 
   final SingleWebPageController controller;
   final ScrollPhysics? physics;
-  final SliverAppBar? sliverAppBar;
+  final Widget? sliverAppBar;
   final List<Widget> sections;
 
   @override

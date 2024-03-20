@@ -1,3 +1,6 @@
+## 1.1.8
+Code refactoring.
+
 ## 1.1.7
 Bugs fixed.
 

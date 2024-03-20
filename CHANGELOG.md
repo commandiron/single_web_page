@@ -1,3 +1,6 @@
+## 1.1.9
+Feature: Now, you can disable scroll.
+
 ## 1.1.8
 Code refactoring.
 

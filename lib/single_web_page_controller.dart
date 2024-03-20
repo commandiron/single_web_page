@@ -49,6 +49,15 @@ class SingleWebPageController extends ScrollController {
   final Map<int, double> _bottomSnapOffsets = {};
   int _lastAnimatedIndex = 0;
   bool _isAnimating = false;
+  bool _disabled = false;
+
+  void disableScroll() {
+    _disabled = true;
+  }
+
+  void enableScroll() {
+    _disabled = false;
+  }
 
   void updateSectionHeights(int index, double height) {
     bool sameValueFlag = false;
@@ -190,6 +199,9 @@ class SingleWebPageController extends ScrollController {
     Duration duration = const Duration(milliseconds: 1000),
     Curve curve = Curves.ease,
   }) async {
+    if (_disabled) {
+      return;
+    }
     if (index < 0) {
       return;
     }

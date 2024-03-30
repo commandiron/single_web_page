@@ -1,3 +1,6 @@
+## 1.2.1
+Code refactoring.
+
 ## 1.2.0
 Single web page physics added.
 

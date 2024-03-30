@@ -54,23 +54,19 @@ class _SingleWebPageState extends State<SingleWebPage> {
   @override
   Widget build(BuildContext context) {
     return _ScrollDetector(
-      onPointerScroll:
-          widget.singleWebPagePhysics == SingleWebPagePhysics.stepByStep ||
-                  widget.singleWebPagePhysics == SingleWebPagePhysics.adaptive
-              ? (pointerScrollEvent) {
-                  if (widget.singleWebPagePhysics ==
-                          SingleWebPagePhysics.adaptive &&
-                      !_Adaptive.isWindows()) {
-                    return;
-                  }
-                  if (pointerScrollEvent.scrollDelta.dy > 0) {
-                    widget.controller.animateToNextSectionIndex();
-                  }
-                  if (pointerScrollEvent.scrollDelta.dy < 0) {
-                    widget.controller.animateToPreviousSectionIndex();
-                  }
-                }
-              : null,
+      onPointerScroll: widget.singleWebPagePhysics ==
+                  SingleWebPagePhysics.stepByStep ||
+              (widget.singleWebPagePhysics == SingleWebPagePhysics.adaptive &&
+                  _Adaptive.isWindows())
+          ? (pointerScrollEvent) {
+              if (pointerScrollEvent.scrollDelta.dy > 0) {
+                widget.controller.animateToNextSectionIndex();
+              }
+              if (pointerScrollEvent.scrollDelta.dy < 0) {
+                widget.controller.animateToPreviousSectionIndex();
+              }
+            }
+          : null,
       child: _SingleWebPageCore(
         controller: widget.controller,
         physics: _physics,

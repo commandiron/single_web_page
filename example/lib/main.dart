@@ -80,7 +80,6 @@ class _SingleWebPageExampleState extends State<SingleWebPageExample> {
     return Scaffold(
       body: SingleWebPage(
         controller: _controller,
-        singleWebPagePhysics: SingleWebPagePhysics.adaptive,
         sliverAppBar: _buildSliverAppBar(),
         sections: Section.sections.map((e) => e.widget).toList(),
       ),

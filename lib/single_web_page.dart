@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -6,11 +5,9 @@ import 'package:single_web_page/single_web_page_controller.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 part 'core/single_web_page_core.dart';
-
 part 'core/widget_size_notifier.dart';
 
 enum SingleWebPagePhysics {
-  adaptive,
   stepByStep,
   flutterDefault,
   lock,
@@ -20,7 +17,7 @@ class SingleWebPage extends StatefulWidget {
   const SingleWebPage({
     super.key,
     required this.controller,
-    this.singleWebPagePhysics = SingleWebPagePhysics.adaptive,
+    this.singleWebPagePhysics = SingleWebPagePhysics.stepByStep,
     this.sliverAppBar,
     required this.sections,
   });
@@ -40,9 +37,6 @@ class _SingleWebPageState extends State<SingleWebPage> {
   @override
   void initState() {
     _physics = switch (widget.singleWebPagePhysics) {
-      SingleWebPagePhysics.adaptive => _Adaptive.isWindows()
-          ? const NeverScrollableScrollPhysics()
-          : const AlwaysScrollableScrollPhysics(),
       SingleWebPagePhysics.stepByStep => const NeverScrollableScrollPhysics(),
       SingleWebPagePhysics.flutterDefault =>
         const AlwaysScrollableScrollPhysics(),
@@ -54,19 +48,28 @@ class _SingleWebPageState extends State<SingleWebPage> {
   @override
   Widget build(BuildContext context) {
     return _ScrollDetector(
-      onPointerScroll: widget.singleWebPagePhysics ==
-                  SingleWebPagePhysics.stepByStep ||
-              (widget.singleWebPagePhysics == SingleWebPagePhysics.adaptive &&
-                  _Adaptive.isWindows())
-          ? (pointerScrollEvent) {
-              if (pointerScrollEvent.scrollDelta.dy > 0) {
-                widget.controller.animateToNextSectionIndex();
-              }
-              if (pointerScrollEvent.scrollDelta.dy < 0) {
-                widget.controller.animateToPreviousSectionIndex();
-              }
-            }
-          : null,
+      onPointerScroll:
+          widget.singleWebPagePhysics == SingleWebPagePhysics.stepByStep
+              ? (pointerScrollEvent) {
+                  if (pointerScrollEvent.scrollDelta.dy > 0) {
+                    widget.controller.animateToNextSectionIndex();
+                  }
+                  if (pointerScrollEvent.scrollDelta.dy < 0) {
+                    widget.controller.animateToPreviousSectionIndex();
+                  }
+                }
+              : null,
+      onPointerMove:
+          widget.singleWebPagePhysics == SingleWebPagePhysics.stepByStep
+              ? (pointerMoveEvent) {
+                  if (pointerMoveEvent.delta.dy > 0) {
+                    widget.controller.animateToPreviousSectionIndex();
+                  }
+                  if (pointerMoveEvent.delta.dy < 0) {
+                    widget.controller.animateToNextSectionIndex();
+                  }
+                }
+              : null,
       child: _SingleWebPageCore(
         controller: widget.controller,
         physics: _physics,
@@ -80,10 +83,12 @@ class _SingleWebPageState extends State<SingleWebPage> {
 class _ScrollDetector extends StatelessWidget {
   const _ScrollDetector({
     required this.onPointerScroll,
+    required this.onPointerMove,
     required this.child,
   });
 
   final void Function(PointerScrollEvent pointerScrollEvent)? onPointerScroll;
+  final void Function(PointerMoveEvent pointerMoveEvent)? onPointerMove;
   final Widget child;
 
   @override
@@ -96,32 +101,8 @@ class _ScrollDetector extends StatelessWidget {
           }
         }
       },
+      onPointerMove: onPointerMove,
       child: child,
-    );
-  }
-}
-
-class _Adaptive extends StatelessWidget {
-  final Widget mobile;
-  final Widget desktop;
-
-  const _Adaptive({
-    required this.mobile,
-    required this.desktop,
-  });
-
-  static bool isWindows() => defaultTargetPlatform == TargetPlatform.windows;
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (defaultTargetPlatform == TargetPlatform.iOS ||
-            defaultTargetPlatform == TargetPlatform.android) {
-          return mobile;
-        }
-        return desktop;
-      },
     );
   }
 }

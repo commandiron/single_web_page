@@ -39,11 +39,14 @@ class _HowToUseSingleWebPageState extends State<HowToUseSingleWebPage> {
   @override
   Widget build(BuildContext context) {
     return SingleWebPage(
-      controller: _controller, //Provide controller
-      singleWebPagePhysics: SingleWebPagePhysics.adaptive, //Specify physics
-      sliverAppBar: null, //Specify sliverAppBar if you want
+      //Provide controller
+      controller: _controller,
+      //Specify physics. You can implement adaptive versions if you want
+      singleWebPagePhysics: SingleWebPagePhysics.stepByStep,
+      //Specify sliverAppBar if you want
+      sliverAppBar: null,
+      //Specify sections
       sections: [
-        //Specify sections
         Container(
           height: MediaQuery.of(context).size.height,
           alignment: Alignment.center,

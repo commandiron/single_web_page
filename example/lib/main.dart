@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:single_web_page/adaptive_single_web_page.dart';
+import 'package:single_web_page/single_web_page.dart';
 import 'package:single_web_page/single_web_page_controller.dart';
 
 void main() {
@@ -78,8 +78,9 @@ class _SingleWebPageExampleState extends State<SingleWebPageExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AdaptiveSingleWebPage(
+      body: SingleWebPage(
         controller: _controller,
+        singleWebPagePhysics: SingleWebPagePhysics.adaptive,
         sliverAppBar: _buildSliverAppBar(),
         sections: Section.sections.map((e) => e.widget).toList(),
       ),

@@ -25,20 +25,20 @@ class _HowToUseSingleWebPageState extends State<HowToUseSingleWebPage> {
     _controller = SingleWebPageController(
       //Specify snap for each index (default topSnap)
       snaps: [Snap.topSnap, Snap.centerSnap, Snap.bottomSnap],
-      //Specify extra offset for topSnaps.
+      //Specify extra offset for topSnaps
       topSnapExtraOffset: 0,
-      //Specify extra offset for centerSnaps.
+      //Specify extra offset for centerSnaps
       centerSnapExtraOffset: 0,
-      //Specify extra offset for bottomSnaps.
+      //Specify extra offset for bottomSnaps
       bottomSnapExtraOffset: 0,
       onAnimatedScrollStart: (currentIndex, targetIndex) {
-        //Listen index on animated scroll start.
+        //Listen index on animated scroll start
       },
       onAnimatedScrollEnd: (currentIndex) {
-        //Listen index on animated scroll end.
+        //Listen index on animated scroll end
       },
       onScrollEnd: (lastVisibleIndex) {
-        //Listen last visible index on (non-animated) scroll end.
+        //Listen last visible index on (non-animated) scroll end
       },
     );
     super.initState();
@@ -46,10 +46,10 @@ class _HowToUseSingleWebPageState extends State<HowToUseSingleWebPage> {
 
   @override
   Widget build(BuildContext context) {
-    //If you want adaptive scroll, use AdaptiveSingleWebPage
     return SingleWebPage(
       controller: _controller, //Provide controller
-      sliverAppBar: null, //Specify sliverAppBar if you want.
+      singleWebPagePhysics: SingleWebPagePhysics.adaptive, //Specify physics
+      sliverAppBar: null, //Specify sliverAppBar if you want
       sections: [
         //Specify sections
         Container(

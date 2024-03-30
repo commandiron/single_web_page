@@ -1,3 +1,6 @@
+## 1.2.0
+Single web page physics added.
+
 ## 1.1.9
 Feature: Now, you can disable scroll.
 

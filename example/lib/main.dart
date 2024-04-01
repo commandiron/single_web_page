@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:single_web_page/single_web_page.dart';
 import 'package:single_web_page/single_web_page_controller.dart';
@@ -295,11 +297,72 @@ class Section2 extends StatelessWidget {
       height: MediaQuery.of(context).size.height - 60,
       color: Theme.of(context).colorScheme.secondaryContainer,
       alignment: Alignment.center,
-      child: Text(
-        "Section 2",
-        style: TextStyle(
-            fontSize: 50,
-            color: Theme.of(context).colorScheme.onSecondaryContainer),
+      child: Column(
+        children: [
+          Text(
+            "Section 2",
+            style: TextStyle(
+              fontSize: 50,
+              color: Theme.of(context).colorScheme.onSecondaryContainer,
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                bottom: 64,
+              ),
+              child: ScrollConfiguration(
+                behavior:
+                    ScrollConfiguration.of(context).copyWith(dragDevices: {
+                  PointerDeviceKind.touch,
+                  PointerDeviceKind.mouse,
+                }),
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  physics: const PageScrollPhysics(),
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      alignment: Alignment.center,
+                      child: Container(
+                        color:
+                            Theme.of(context).colorScheme.onSecondaryContainer,
+                        width: MediaQuery.of(context).size.width / 2,
+                        height: MediaQuery.of(context).size.height / 2,
+                        alignment: Alignment.center,
+                        child: const Text("Horizontal scroll test, Child 1"),
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      alignment: Alignment.center,
+                      child: Container(
+                        color:
+                            Theme.of(context).colorScheme.onSecondaryContainer,
+                        width: MediaQuery.of(context).size.width / 2,
+                        height: MediaQuery.of(context).size.height / 2,
+                        alignment: Alignment.center,
+                        child: const Text("Child 2"),
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      alignment: Alignment.center,
+                      child: Container(
+                        color:
+                            Theme.of(context).colorScheme.onSecondaryContainer,
+                        width: MediaQuery.of(context).size.width / 2,
+                        height: MediaQuery.of(context).size.height / 2,
+                        alignment: Alignment.center,
+                        child: const Text("Child 3"),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

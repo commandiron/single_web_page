@@ -1,3 +1,6 @@
+## 1.2.3
+Bugs fixed.
+
 ## 1.2.2
 Adaptive implementation is left to the user by creating a custom physics class.
 

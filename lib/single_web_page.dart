@@ -5,7 +5,6 @@ import 'package:single_web_page/single_web_page_controller.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 part 'core/single_web_page_core.dart';
-part 'core/widget_size_notifier.dart';
 
 enum SingleWebPagePhysics {
   stepByStep,
@@ -59,13 +58,13 @@ class _SingleWebPageState extends State<SingleWebPage> {
                   }
                 }
               : null,
-      onPointerMove:
+      onVerticalDragUpdate:
           widget.singleWebPagePhysics == SingleWebPagePhysics.stepByStep
-              ? (pointerMoveEvent) {
-                  if (pointerMoveEvent.delta.dy > 0) {
+              ? (dragUpdateDetails) {
+                  if (dragUpdateDetails.delta.dy > 0) {
                     widget.controller.animateToPreviousSectionIndex();
                   }
-                  if (pointerMoveEvent.delta.dy < 0) {
+                  if (dragUpdateDetails.delta.dy < 0) {
                     widget.controller.animateToNextSectionIndex();
                   }
                 }
@@ -82,27 +81,29 @@ class _SingleWebPageState extends State<SingleWebPage> {
 
 class _ScrollDetector extends StatelessWidget {
   const _ScrollDetector({
-    required this.onPointerScroll,
-    required this.onPointerMove,
+    this.onPointerScroll,
+    this.onVerticalDragUpdate,
     required this.child,
   });
 
   final void Function(PointerScrollEvent pointerScrollEvent)? onPointerScroll;
-  final void Function(PointerMoveEvent pointerMoveEvent)? onPointerMove;
+  final void Function(DragUpdateDetails dragUpdateDetails)?
+      onVerticalDragUpdate;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return Listener(
-      onPointerSignal: (pointerSignal) {
-        if (pointerSignal is PointerScrollEvent) {
-          if (onPointerScroll != null) {
-            onPointerScroll!(pointerSignal);
-          }
-        }
-      },
-      onPointerMove: onPointerMove,
-      child: child,
-    );
+        onPointerSignal: onPointerScroll != null
+            ? (pointerSignal) {
+                if (pointerSignal is PointerScrollEvent) {
+                  onPointerScroll!(pointerSignal);
+                }
+              }
+            : null,
+        child: GestureDetector(
+          onVerticalDragUpdate: onVerticalDragUpdate,
+          child: child,
+        ));
   }
 }

@@ -15,6 +15,7 @@ class SingleWebPageController extends ScrollController {
     this.onAnimatedScrollStart,
     this.onAnimatedScrollEnd,
     this.onScrollEnd,
+    this.triggerSameIndexAnimationEffect = true,
   }) {
     addListener(() {
       if (!_isAnimating) {
@@ -42,6 +43,7 @@ class SingleWebPageController extends ScrollController {
   final void Function(int currentIndex, int targetIndex)? onAnimatedScrollStart;
   final void Function(int currentIndex)? onAnimatedScrollEnd;
   final void Function(int lastVisibleIndex)? onScrollEnd;
+  final bool triggerSameIndexAnimationEffect;
 
   final Map<int, double> _sectionHeights = {};
   final Map<int, double> _topSnapOffsets = {};
@@ -216,6 +218,13 @@ class SingleWebPageController extends ScrollController {
       onAnimatedScrollStart!(_lastAnimatedIndex, index);
     }
     _isAnimating = true;
+    if (_lastAnimatedIndex == index && triggerSameIndexAnimationEffect) {
+      await super.animateTo(
+        snapOffset - 100,
+        duration: const Duration(milliseconds: 250),
+        curve: curve,
+      );
+    }
     await animateTo(snapOffset, duration: duration, curve: curve);
     _isAnimating = false;
     _lastAnimatedIndex = index;

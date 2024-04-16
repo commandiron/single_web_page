@@ -40,6 +40,8 @@ class _HowToUseSingleWebPageState extends State<HowToUseSingleWebPage> {
       onScrollEnd: (lastVisibleIndex) {
         //Listen last visible index on (non-animated) scroll end
       },
+      //If the user wants to animate same index, this will trigger the animation effect.
+      triggerSameIndexAnimationEffect: true
     );
     super.initState();
   }

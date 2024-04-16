@@ -1,3 +1,6 @@
+## 1.2.4
+Feature: Same index animation effect added.
+
 ## 1.2.3
 Bugs fixed.
 

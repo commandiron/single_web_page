@@ -15,24 +15,25 @@ class _HowToUseSingleWebPageState extends State<HowToUseSingleWebPage> {
   @override
   void initState() {
     _controller = SingleWebPageController(
-      //Specify snap for each index (default topSnap)
-      snaps: [Snap.topSnap, Snap.centerSnap, Snap.bottomSnap],
-      //Specify extra offset for topSnaps
-      topSnapExtraOffset: 0,
-      //Specify extra offset for centerSnaps
-      centerSnapExtraOffset: 0,
-      //Specify extra offset for bottomSnaps
-      bottomSnapExtraOffset: 0,
-      onAnimatedScrollStart: (currentIndex, targetIndex) {
-        //Listen index on animated scroll start
-      },
-      onAnimatedScrollEnd: (currentIndex) {
-        //Listen index on animated scroll end
-      },
-      onScrollEnd: (lastVisibleIndex) {
-        //Listen last visible index on (non-animated) scroll end
-      },
-    );
+        //Specify snap for each index (default topSnap)
+        snaps: [Snap.topSnap, Snap.centerSnap, Snap.bottomSnap],
+        //Specify extra offset for topSnaps
+        topSnapExtraOffset: 0,
+        //Specify extra offset for centerSnaps
+        centerSnapExtraOffset: 0,
+        //Specify extra offset for bottomSnaps
+        bottomSnapExtraOffset: 0,
+        onAnimatedScrollStart: (currentIndex, targetIndex) {
+          //Listen index on animated scroll start
+        },
+        onAnimatedScrollEnd: (currentIndex) {
+          //Listen index on animated scroll end
+        },
+        onScrollEnd: (lastVisibleIndex) {
+          //Listen last visible index on (non-animated) scroll end
+        },
+        //If the user wants to animate same index, this will trigger the animation effect.
+        triggerSameIndexAnimationEffect: true);
     super.initState();
   }
 

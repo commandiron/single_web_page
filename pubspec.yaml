@@ -1,9 +1,9 @@
 name: single_web_page
-description: "Create Single Web Page Layout with adaptive scrollable implementations."
+description: "Create Single Web Page Layout with easy and optimized scrolling options in Flutter."
 homepage: https://github.com/commandiron/single_web_page
 repository: https://github.com/commandiron/single_web_page
 
-version: 1.2.3
+version: 1.2.4
 
 environment:
   sdk: '>=3.2.2 <4.0.0'
